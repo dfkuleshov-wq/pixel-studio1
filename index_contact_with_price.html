@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090711">
+  <meta name="description" content="Pixel Studio — создание современных сайтов, игровых страниц и мини-игр.">
+  <title>Pixel Studio — сайты и игровые проекты</title>
+  <style>
+    :root {
+      --bg: #090711;
+      --panel: #12101d;
+      --panel2: #191528;
+      --purple: #9b5cff;
+      --purple2: #6e38d8;
+      --text: #f7f4ff;
+      --muted: #aaa3bd;
+      --line: rgba(190, 156, 255, .16);
+      --glow: 0 0 55px rgba(139, 75, 255, .22);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; color: var(--text); background:
+        radial-gradient(ellipse at 80% 5%, rgba(116, 49, 210, .20), transparent 34rem),
+        radial-gradient(ellipse at 5% 45%, rgba(73, 35, 130, .13), transparent 30rem), var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin: auto; }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 0; border-bottom: 1px solid var(--line);
+    }
+    .brand { display: flex; align-items: center; gap: 11px; font-weight: 850; letter-spacing: -.5px; }
+    .logo {
+      width: 39px; height: 39px; display: grid; place-items: center; border-radius: 12px;
+      color: white; font-weight: 900; background: linear-gradient(135deg, #bd8aff, #6729d2);
+      box-shadow: 0 7px 25px rgba(142, 74, 255, .35);
+    }
+    .brand span:last-child { font-size: 19px; }
+    .navlinks { display: flex; gap: 27px; color: var(--muted); font-size: 14px; }
+    .navlinks a:hover, .footer a:hover { color: white; }
+    .nav-cta, .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      border: 1px solid rgba(198, 164, 255, .28); border-radius: 12px;
+      padding: 12px 18px; font-weight: 750; color: white; cursor: pointer;
+      background: linear-gradient(135deg, #9b5cff, #7138d6);
+      box-shadow: 0 8px 26px rgba(123, 61, 220, .24); transition: .2s ease;
+    }
+    .btn:hover, .nav-cta:hover { transform: translateY(-2px); filter: brightness(1.1); }
+    .btn.secondary { background: rgba(255,255,255,.04); box-shadow: none; }
+    .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 55px; align-items: center; padding: 88px 0 92px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; color: #c9a8ff; font-size: 12px;
+      font-weight: 800; letter-spacing: 1.7px; text-transform: uppercase;
+      border: 1px solid var(--line); background: rgba(155,92,255,.08); border-radius: 99px; padding: 8px 12px;
+    }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: #b98aff; box-shadow: 0 0 12px #a66aff; }
+    h1 { font-size: clamp(42px, 6vw, 72px); line-height: 1.04; letter-spacing: -3px; margin: 22px 0; }
+    .gradient { background: linear-gradient(90deg, #fff 5%, #c59aff 52%, #8c55ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lead { max-width: 570px; color: var(--muted); font-size: 18px; margin: 0 0 29px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .micro { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 30px; color: #bdb5ce; font-size: 13px; }
+    .micro span::before { content: "✓"; color: #b88aff; font-weight: 900; margin-right: 7px; }
+    .preview {
+      position: relative; border: 1px solid rgba(194,157,255,.24); border-radius: 25px; padding: 15px;
+      background: linear-gradient(145deg, rgba(33,25,51,.95), rgba(15,13,24,.96)); box-shadow: var(--glow);
+      transform: perspective(900px) rotateY(-5deg) rotateX(2deg);
+    }
+    .windowbar { display: flex; gap: 6px; padding: 2px 3px 14px; }
+    .windowbar i { width: 8px; height: 8px; border-radius: 50%; background: #6c5a80; }
+    .mock {
+      min-height: 335px; border-radius: 16px; overflow: hidden; padding: 24px;
+      background: radial-gradient(circle at 75% 30%, rgba(155,92,255,.35), transparent 40%), #0b0913;
+      border: 1px solid rgba(255,255,255,.07);
+    }
+    .mock-top { display:flex; justify-content:space-between; color:#d8c6f7; font-size:11px; font-weight:800; }
+    .mock h3 { font-size: 31px; line-height:1.08; margin:45px 0 12px; max-width:280px; }
+    .mock p { color:#a99fba; font-size:12px; max-width:240px; }
+    .mock-button { display:inline-block; padding:9px 13px; border-radius:8px; margin-top:10px; font-size:11px; background:#8d4af0; }
+    .mock-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:35px; }
+    .mock-cards div { height:62px; border-radius:9px; background:linear-gradient(145deg,#35244f,#171323); border:1px solid #493267; }
+    .float-tag {
+      position:absolute; right:-18px; bottom:28px; padding:12px 16px; border-radius:13px;
+      background:#211832; border:1px solid #68479a; box-shadow:var(--glow); font-size:12px; font-weight:800;
+    }
+    section { padding: 65px 0; }
+    .section-head { max-width:650px; margin-bottom:30px; }
+    .kicker { color:#bd91ff; font-size:12px; text-transform:uppercase; letter-spacing:1.8px; font-weight:850; }
+    h2 { font-size: clamp(30px, 4vw, 43px); letter-spacing:-1.5px; line-height:1.15; margin:10px 0 12px; }
+    .section-head p { color:var(--muted); margin:0; }
+    .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .card {
+      border:1px solid var(--line); border-radius:var(--radius); padding:23px;
+      background:linear-gradient(145deg,rgba(26,21,40,.92),rgba(15,13,23,.9));
+      transition:.2s ease;
+    }
+    .card:hover { transform:translateY(-4px); border-color:rgba(185,139,255,.48); }
+    .icon {
+      width:45px; height:45px; border-radius:13px; display:grid; place-items:center; font-size:21px;
+      background:rgba(155,92,255,.14); border:1px solid rgba(174,125,255,.2); margin-bottom:17px;
+    }
+    .card h3 { margin:0 0 8px; font-size:18px; }
+    .card p { margin:0; color:var(--muted); font-size:14px; }
+    .work-card { padding:0; overflow:hidden; }
+    .work-art { height:170px; display:grid; place-items:center; position:relative; overflow:hidden; background:linear-gradient(135deg,#25143f,#100d1c); }
+    .work-art::before, .work-art::after { content:""; position:absolute; border:1px solid rgba(205,170,255,.24); border-radius:50%; width:210px;height:210px; }
+    .work-art::after { width:145px;height:145px; }
+    .art-label { z-index:1; font-size:27px; font-weight:900; letter-spacing:-1px; text-shadow:0 5px 25px #000; }
+    .work-info { padding:20px; }
+    .work-info small { color:#bd91ff; font-weight:800; letter-spacing:1px; text-transform:uppercase; font-size:10px; }
+    .work-info h3 { margin:5px 0; }
+    .work-info p { margin:0; color:var(--muted); font-size:13px; }
+    .note { margin-top:17px; color:#958ba8; font-size:12px; }
+    .steps { display:grid; grid-template-columns:repeat(4,1fr); gap:13px; }
+    .step { padding:20px; border-top:2px solid #8750d9; background:rgba(255,255,255,.025); border-radius:0 0 15px 15px; }
+    .num { color:#bd91ff; font-weight:900; font-size:13px; }
+    .step h3 { font-size:16px; margin:8px 0 5px; }
+    .step p { font-size:13px; color:var(--muted); margin:0; }
+    .contact {
+      display:grid; grid-template-columns:1fr 1fr; gap:30px; align-items:center;
+      padding:35px; border:1px solid rgba(180,130,255,.25); border-radius:25px;
+      background:radial-gradient(circle at 90% 10%,rgba(130,66,220,.2),transparent 40%),#141020;
+    }
+    .contact p { color:var(--muted); }
+    .contact-box { background:rgba(0,0,0,.2); border:1px solid var(--line); padding:20px; border-radius:17px; }
+    label { display:block; font-size:12px; color:#c8bddb; margin:10px 0 6px; }
+    input, textarea {
+      width:100%; padding:12px 13px; border-radius:10px; border:1px solid var(--line);
+      color:white; background:#0d0a16; outline:none;
+    }
+    input:focus, textarea:focus { border-color:#9b5cff; }
+    textarea { min-height:90px; resize:vertical; }
+    .contact-box .btn { width:100%; margin-top:13px; }
+    .form-hint { color:#887e9b; font-size:11px; margin:10px 0 0; }
+    .contact-actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .contact-actions .btn { width:100%; margin-top:13px; }
+    .telegram-link { display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      margin-top:12px; color:#c9a8ff; font-size:13px; font-weight:700; }
+    .telegram-link:hover { color:white; }
+    @media (max-width:520px) { .contact-actions { grid-template-columns:1fr; gap:0; } }
+    footer { border-top:1px solid var(--line); padding:25px 0; color:#8f869f; font-size:12px; }
+    .footer { display:flex; justify-content:space-between; gap:15px; flex-wrap:wrap; }
+    @media (max-width: 800px) {
+      .hero { grid-template-columns:1fr; padding:60px 0; gap:35px; }
+      .preview { max-width:570px; width:100%; margin:auto; transform:none; }
+      .grid3 { grid-template-columns:1fr 1fr; }
+      .steps { grid-template-columns:1fr 1fr; }
+      .contact { grid-template-columns:1fr; padding:25px; }
+      .navlinks { display:none; }
+    }
+    @media (max-width: 520px) {
+      .wrap { width:min(100% - 28px,1120px); }
+      .nav { padding:15px 0; }
+      .nav-cta { padding:9px 12px; font-size:12px; }
+      h1 { letter-spacing:-2px; }
+      .lead { font-size:16px; }
+      .grid3, .steps { grid-template-columns:1fr; }
+      section { padding:48px 0; }
+      .mock { min-height:300px; padding:18px; }
+      .float-tag { right:5px; bottom:10px; }
+      .contact { padding:20px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <nav class="nav">
+      <a class="brand" href="#top" aria-label="Pixel Studio — главная">
+        <span class="logo">P</span><span>Pixel Studio</span>
+      </a>
+      <div class="navlinks">
+        <a href="#services">Услуги</a><a href="#works">Работы</a><a href="#process">Как работаем</a><a href="#contact">Контакты</a>
+      </div>
+      <a class="nav-cta" href="#contact">Обсудить проект ↗</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <div class="wrap hero">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Сайты и игровые проекты</div>
+        <h1>Идеи превращаем<br>в <span class="gradient">цифровые проекты</span></h1>
+        <p class="lead">Создаём современные сайты, игровые страницы и небольшие браузерные игры. Продуманный дизайн, удобство на телефоне и компьютере.</p>
+        <div class="actions">
+          <a class="btn" href="#contact">Заказать проект <span>↗</span></a>
+          <a class="btn secondary" href="#works">Посмотреть примеры</a>
+        </div>
+        <div class="micro"><span>Адаптивный дизайн</span><span>Индивидуальный подход</span><span>Связь напрямую</span></div>
+      </div>
+      <div class="preview" aria-label="Демонстрация дизайна сайта">
+        <div class="windowbar"><i></i><i></i><i></i></div>
+        <div class="mock">
+          <div class="mock-top"><span>PIXEL STUDIO</span><span>WEB / GAME</span></div>
+          <h3>Твой проект.<br><span class="gradient">Твой стиль.</span></h3>
+          <p>Современный дизайн, который помогает выделиться.</p>
+          <span class="mock-button">Начать проект →</span>
+          <div class="mock-cards"><div></div><div></div><div></div></div>
+        </div>
+        <div class="float-tag">✦ Сделано с вниманием к деталям</div>
+      </div>
+    </div>
+
+    <section id="services">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Что мы делаем</div>
+          <h2>Услуги Pixel Studio</h2>
+          <p>Помогаем запустить идею в интернете — от простой страницы до небольшого игрового проекта.</p>
+        </div>
+        <div class="grid3">
+          <article class="card"><div class="icon">⌘</div><h3>Сайты-визитки</h3><p>Стильные страницы для мастеров, небольших компаний, блогеров и личных проектов.</p></article>
+          <article class="card"><div class="icon">🎮</div><h3>Мини-игры</h3><p>Браузерные кликеры, аркады, викторины и простые игровые механики.</p></article>
+          <article class="card"><div class="icon">✦</div><h3>Игровые страницы</h3><p>Страницы для игровых серверов, сообществ, проектов и авторских игр.</p></article>
+          <article class="card"><div class="icon">▣</div><h3>Доработка сайтов</h3><p>Новые блоки, кнопки, меню, адаптация под мобильные устройства и исправления.</p></article>
+          <article class="card"><div class="icon">◈</div><h3>Дизайн интерфейса</h3><p>Продумываем внешний вид экранов, меню, карточек, форм и игровых элементов.</p></article>
+          <article class="card"><div class="icon">↗</div><h3>Публикация проекта</h3><p>Подготовка файлов и помощь с размещением сайта на подходящем хостинге.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="works">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Портфолио</div>
+          <h2>Примеры направлений</h2>
+          <p>Ниже — концепты, показывающие стиль и типы проектов, которые можно разработать под задачу клиента.</p>
+        </div>
+        <div class="grid3">
+          <article class="card work-card">
+            <div class="work-art"><div class="art-label">GAME ZONE</div></div>
+            <div class="work-info"><small>Игровой проект · Концепт</small><h3>Страница игрового сообщества</h3><p>Информация о проекте, преимущества, новости и кнопки перехода.</p></div>
+          </article>
+          <article class="card work-card">
+            <div class="work-art" style="background:linear-gradient(135deg,#172b45,#11101d)"><div class="art-label">YOUR BRAND</div></div>
+            <div class="work-info"><small>Бизнес · Концепт</small><h3>Сайт-визитка</h3><p>Услуги, описание, преимущества и форма заявки для потенциальных клиентов.</p></div>
+          </article>
+          <article class="card work-card">
+            <div class="work-art" style="background:linear-gradient(135deg,#3b1b50,#140d20)"><div class="art-label">PIXEL ARCADE</div></div>
+            <div class="work-info"><small>Разработка игр · Концепт</small><h3>Браузерная мини-игра</h3><p>Стартовый экран, игровой процесс, счёт и таблица рекордов.</p></div>
+          </article>
+        </div>
+        <p class="note">Важно: это демонстрационные концепты для портфолио, а не завершённые клиентские заказы. По мере появления реальных проектов замени их скриншотами готовых работ.</p>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Простой процесс</div>
+          <h2>От идеи до результата</h2>
+          <p>Сначала разбираемся в задаче, затем согласовываем объём работ и только после этого приступаем к разработке.</p>
+        </div>
+        <div class="steps">
+          <div class="step"><div class="num">01 / ЗАПРОС</div><h3>Обсуждаем идею</h3><p>Уточняем цель проекта, нужные функции и примеры, которые нравятся.</p></div>
+          <div class="step"><div class="num">02 / ПЛАН</div><h3>Согласовываем детали</h3><p>Фиксируем состав работы, стоимость, сроки и порядок оплаты.</p></div>
+          <div class="step"><div class="num">03 / СОЗДАНИЕ</div><h3>Разрабатываем</h3><p>Собираем проект и показываем промежуточный результат для проверки.</p></div>
+          <div class="step"><div class="num">04 / ФИНИШ</div><h3>Передаём проект</h3><p>Проверяем работу, вносим согласованные правки и передаём файлы.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <div class="contact">
+          <div>
+            <div class="kicker">Есть идея?</div>
+            <h2>Давайте создадим что-то классное</h2>
+            <p>Расскажите, какой сайт или игровой проект вам нужен. Обсудим задачу, предложим решение и согласуем стоимость до начала работы.</p>
+            <p><strong>Pixel Studio</strong><br><span style="color:#9b91aa;font-size:13px">На связи по предварительной договорённости</span></p>
+          </div>
+          <form class="contact-box" id="contactForm">
+            <label for="name">Как к вам обращаться?</label>
+            <input id="name" name="name" placeholder="Ваше имя" required>
+            <label for="contactWay">Как с вами связаться? (Telegram, email и т. д.)</label>
+            <input id="contactWay" name="contactWay" placeholder="@username или email" required>
+            <label for="message">Что хотите создать?</label>
+            <textarea id="message" name="message" placeholder="Кратко опишите вашу идею..." required></textarea>
+            <label for="gamePrice">Цена игры (от 200 ₽ до 50 000 ₽)</label>
+            <input id="gamePrice" name="gamePrice" type="number" min="200" max="50000" step="1" placeholder="Например, 1500" required>
+            <div class="contact-actions">
+              <button class="btn" type="button" id="sendEmail">Написать на Gmail ↗</button>
+              <button class="btn secondary" type="button" id="sendTelegram">Написать в Telegram ↗</button>
+            </div>
+            <a class="telegram-link" href="https://t.me/dfkuleshov" target="_blank" rel="noopener noreferrer">Открыть Telegram @dfkuleshov</a>
+            <p class="form-hint">Gmail откроет письмо на адрес kulesovdmitrij99@gmail.com. Telegram откроет чат с @dfkuleshov. Перед переходом текст сообщения будет подготовлен из заполненной формы.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer">
+      <span>© <span id="year"></span> Pixel Studio. Все права защищены.</span>
+      <span>Сайты · Игры · Цифровые проекты</span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function getContactMessage() {
+      const name = document.getElementById('name').value.trim() || 'Не указано';
+      const contact = document.getElementById('contactWay').value.trim() || 'Не указано';
+      const project = document.getElementById('message').value.trim() || 'Пока нет описания проекта';
+      const priceInput = document.getElementById('gamePrice');
+      const price = Number(priceInput.value);
+
+      if (!priceInput.value || price < 200 || price > 50000) {
+        priceInput.setCustomValidity('Укажите цену от 200 до 50 000 рублей.');
+        priceInput.reportValidity();
+        priceInput.addEventListener('input', () => priceInput.setCustomValidity(''), { once: true });
+        return null;
+      }
+
+      return 'Здравствуйте! Меня зовут ' + name + '.\n' +
+        'Для связи: ' + contact + '\n\n' +
+        'Мой проект:\n' + project + '\n\n' +
+        'Предлагаемая цена игры: ' + price.toLocaleString('ru-RU') + ' ₽';
+    }
+
+    document.getElementById('sendEmail').addEventListener('click', function () {
+      const message = getContactMessage();
+      if (!message) return;
+      const subject = encodeURIComponent('Новый запрос для Pixel Studio');
+      const body = encodeURIComponent(message);
+      const gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=kulesovdmitrij99@gmail.com&su=' + subject + '&body=' + body;
+      window.open(gmailUrl, '_blank', 'noopener');
+    });
+
+    document.getElementById('sendTelegram').addEventListener('click', function () {
+      const message = getContactMessage();
+      if (!message) return;
+      const text = encodeURIComponent(message);
+      window.open('https://t.me/dfkuleshov?text=' + text, '_blank', 'noopener');
+    });
+  </script>
+</body>
+</html>
